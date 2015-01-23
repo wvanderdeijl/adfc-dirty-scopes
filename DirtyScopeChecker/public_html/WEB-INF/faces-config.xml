@@ -3,4 +3,7 @@
   <application>
     <default-render-kit-id>oracle.adf.rich</default-render-kit-id>
   </application>
+  <lifecycle>
+    <phase-listener>com.redheap.dirtyscopes.DirtyScopePhaseListener</phase-listener>
+  </lifecycle>
 </faces-config>

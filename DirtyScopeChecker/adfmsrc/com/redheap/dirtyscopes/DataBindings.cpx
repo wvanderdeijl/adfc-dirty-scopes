@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.1.3.10.8" id="DataBindings"
+             SeparateXMLFiles="false" Package="com.redheap.dirtyscopes" ClientType="Generic">
+  <definitionFactories>
+    <factory nameSpace="http://xmlns.oracle.com/adf/controller/binding"
+             className="oracle.adf.controller.internal.binding.TaskFlowBindingDefFactoryImpl"/>
+    <dtfactory className="oracle.adf.controller.internal.dtrt.binding.BindingDTObjectFactory"/>
+  </definitionFactories>
+  <pageMap>
+    <page path="/demo.jsf" usageId="com_redheap_dirtyscopes_demoPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="com_redheap_dirtyscopes_demoPageDef" path="com.redheap.dirtyscopes.pageDefs.demoPageDef"/>
+  </pageDefinitionUsages>
+</Application>

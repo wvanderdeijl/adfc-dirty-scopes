@@ -11,4 +11,7 @@
   <library-ref>
     <library-name>adf.oracle.domain</library-name>
   </library-ref>
+  <session-descriptor>
+    <persistent-store-type>REPLICATED_IF_CLUSTERED</persistent-store-type>
+  </session-descriptor>
 </weblogic-application>

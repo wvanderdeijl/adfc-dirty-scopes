@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <af:button text="Do nothing" id="b1" action="#{viewScope.viewScopeBean.emptyAction}"/>
+  <af:button text="Change state (without mark dirty)" id="b2" action="#{viewScope.viewScopeBean.changeState}"/>
+  <af:button text="Change state (and mark dirty)" id="b3" action="#{viewScope.viewScopeBean.changeStateAndMark}"/>
+</ui:composition>
