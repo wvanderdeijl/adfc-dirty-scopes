@@ -7,6 +7,7 @@ import javax.faces.event.PhaseListener;
 import oracle.adf.controller.ControllerContext;
 import oracle.adf.controller.config.ControllerConfig;
 import oracle.adf.controller.config.ControllerProperty;
+import oracle.adf.share.ADFContext;
 
 import oracle.adfinternal.controller.state.AdfcContext;
 
@@ -26,8 +27,7 @@ public class DirtyScopePhaseListener implements PhaseListener {
     @Override
     public void beforePhase(PhaseEvent event) {
         if (PhaseId.RESTORE_VIEW.equals(event.getPhaseId())) {
-            System.out.println("BEFORE " + event.getPhaseId());
-            dump();
+            ADFContext.getCurrent().getRequestScope().put(ScopesSnapshot.class.getName(), new ScopesSnapshot());
         }
     }
 
@@ -35,11 +35,6 @@ public class DirtyScopePhaseListener implements PhaseListener {
     public void afterPhase(PhaseEvent event) {
         // RichPhaseListener.renderSucceeded will always mark dirty before this
         // invoked from DocumentRenderer.encodeAll
-        // we can register
-        if (PhaseId.RENDER_RESPONSE.equals(event.getPhaseId())) {
-            System.out.println("AFTER " + event.getPhaseId());
-            dump();
-        }
     }
 
     public void dump() {
@@ -59,7 +54,7 @@ public class DirtyScopePhaseListener implements PhaseListener {
      * its scopes (viewScopes and pageFlowScopes) to the other nodes in a cluster.
      * @return {@code true} if {@code adf-scope-ha-support} is set to true in adf-config.xml, otherwise {@code false}
      */
-    private boolean isReplicatingCluster() {
+    public static boolean isReplicatingCluster() {
         return Boolean.TRUE.equals(ControllerConfig.getProperty(ControllerProperty.ADF_SCOPE_HA_SUPPORT));
     }
 
@@ -69,7 +64,7 @@ public class DirtyScopePhaseListener implements PhaseListener {
      * @return {@code true} if the ADF Controller scopes have been marked dirty and will be replicated to other nodes
      * in the cluster at the end of the request, otherwise {@code false}
      */
-    private boolean isScopesDirty() {
+    public static boolean isScopesDirty() {
         // RequestState is deprected in 12c so you could use
         // oracle.adfinternal.controller.state.AdfcContext.getCurrentInstance().getRequestState().isScopesDirty()
         return oracle.adfinternal.controller.state.RequestState.getInstance().isScopesDirty();

@@ -5,7 +5,7 @@
     <af:button text="Do nothing" id="b1" action="#{viewScope.secondViewScopeBean.emptyAction}"/>
     <af:button text="Change state (without mark dirty)" id="b2" action="#{viewScope.secondViewScopeBean.changeState}"/>
     <af:button text="Change state (and mark dirty)" id="b3" action="#{viewScope.secondViewScopeBean.changeStateAndMark}"/>
-    <af:button text="Go to page 1" action="return" id="b4"/>
+    <af:button text="Go to page 1" action="goFirst" id="b4"/>
     <af:button text="Call taskflow" action="deeper" id="b5"/>
     <af:button text="Exit taskflow" action="return" id="b6"/>
   </af:panelGroupLayout>

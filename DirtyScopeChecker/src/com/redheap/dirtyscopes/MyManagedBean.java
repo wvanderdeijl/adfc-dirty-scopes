@@ -9,6 +9,7 @@ import oracle.adf.share.logging.ADFLogger;
 public class MyManagedBean implements Serializable {
 
     private int number = 0;
+    //private Object nonSerializable = new Object();
     private static final ADFLogger logger = ADFLogger.createADFLogger(MyManagedBean.class);
 
     public String emptyAction() {

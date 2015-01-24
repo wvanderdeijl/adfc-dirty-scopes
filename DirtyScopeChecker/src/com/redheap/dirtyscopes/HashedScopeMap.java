@@ -1,6 +1,7 @@
 package com.redheap.dirtyscopes;
 
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
@@ -29,7 +30,12 @@ public class HashedScopeMap extends AbstractMap<String, byte[]> {
         this.key = scopeMap.getSessionKey();
         this.digests = new HashMap<String, byte[]>(scopeMap.size());
         for (final Map.Entry<String, Object> entry : scopeMap.entrySet()) {
-            digests.put(entry.getKey(), digest(entry.getValue()));
+            try {
+                digests.put(entry.getKey(), digest(entry.getValue()));
+            } catch (NotSerializableException e) {
+                // TODO: proper exception
+                throw new RuntimeException("scope " + key + " contains unserializable element at " + entry.getKey(), e);
+            }
         }
     }
 
@@ -42,14 +48,16 @@ public class HashedScopeMap extends AbstractMap<String, byte[]> {
         return bytes == null ? null : DatatypeConverter.printHexBinary(bytes);
     }
 
-    private byte[] digest(Object object) {
+    private byte[] digest(Object object) throws NotSerializableException {
         try {
-            // MD5 produces smalles hashes (= lowest memory consumption)
+            // MD5 produces smallest hashes (= lowest memory consumption)
             final DigestOutputStream dos = new DigestOutputStream(NULL_STREAM, MessageDigest.getInstance("MD5"));
             final ObjectOutputStream oos = new ObjectOutputStream(dos);
             oos.writeObject(object);
             oos.close();
             return dos.getMessageDigest().digest();
+        } catch (NotSerializableException e) {
+            throw e;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
