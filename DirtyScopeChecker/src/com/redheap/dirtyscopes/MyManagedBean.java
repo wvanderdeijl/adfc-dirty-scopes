@@ -29,4 +29,9 @@ public class MyManagedBean implements Serializable {
         ControllerContext.getInstance().markScopeDirty(ADFContext.getCurrent().getViewScope());
         return null;
     }
+
+    public int getState() {
+        return number;
+    }
+
 }

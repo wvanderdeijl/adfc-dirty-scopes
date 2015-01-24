@@ -10,9 +10,63 @@
       <managed-bean-class>com.redheap.dirtyscopes.MyManagedBean</managed-bean-class>
       <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+    <managed-bean id="__2">
+      <managed-bean-name>secondViewScopeBean</managed-bean-name>
+      <managed-bean-class>com.redheap.dirtyscopes.MyManagedBean</managed-bean-class>
+      <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__11">
+      <managed-bean-name>pageFlowBean</managed-bean-name>
+      <managed-bean-class>com.redheap.dirtyscopes.MyManagedBean</managed-bean-class>
+      <managed-bean-scope>pageFlow</managed-bean-scope>
+    </managed-bean>
     <view id="fragment">
       <page>/fragment.jsff</page>
     </view>
+    <view id="secondFragment">
+      <page>/secondFragment.jsff</page>
+    </view>
+    <task-flow-return id="taskFlowReturn1">
+      <outcome>
+        <name>taskFlowReturn1</name>
+      </outcome>
+    </task-flow-return>
+    <task-flow-call id="recursiveCall">
+      <task-flow-reference>
+        <document>/task-flow-definition.xml</document>
+        <id>task-flow-definition</id>
+      </task-flow-reference>
+    </task-flow-call>
+    <control-flow-rule id="__3">
+      <from-activity-id>fragment</from-activity-id>
+      <control-flow-case id="__4">
+        <from-outcome>goSecond</from-outcome>
+        <to-activity-id>secondFragment</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__8">
+        <from-outcome>return</from-outcome>
+        <to-activity-id>taskFlowReturn1</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__10">
+        <from-outcome>deeper</from-outcome>
+        <to-activity-id>recursiveCall</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__5">
+      <from-activity-id>secondFragment</from-activity-id>
+      <control-flow-case id="__6">
+        <from-outcome>goFirst</from-outcome>
+        <to-activity-id>fragment</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__7">
+        <from-outcome>return</from-outcome>
+        <to-activity-id>taskFlowReturn1</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__9">
+        <from-outcome>deeper</from-outcome>
+        <to-activity-id>recursiveCall</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
     <use-page-fragments/>
   </task-flow-definition>
 </adfc-config>

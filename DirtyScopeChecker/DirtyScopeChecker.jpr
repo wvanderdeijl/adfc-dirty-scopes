@@ -166,7 +166,11 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <url n="id" path="../../../Users/zwd/AppData/Roaming/JDeveloper/system12.1.3.0.41.140521.1008/o.jdeveloper/ADF 12.1.2 src.library"/>
+            <url n="id" path="../../../Users/user/AppData/Roaming/JDeveloper/system12.1.3.0.41.140521.1008/o.jdeveloper/Adf_121300_1008_source.zip.library"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="WebLogic 12.1 Remote-Client"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>
@@ -256,7 +260,11 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <url n="id" path="../../../Users/zwd/AppData/Roaming/JDeveloper/system12.1.3.0.41.140521.1008/o.jdeveloper/ADF 12.1.2 src.library"/>
+            <url n="id" path="../../../Users/user/AppData/Roaming/JDeveloper/system12.1.3.0.41.140521.1008/o.jdeveloper/Adf_121300_1008_source.zip.library"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="WebLogic 12.1 Remote-Client"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>
