@@ -41,12 +41,31 @@ public class ViewPortSnapshot {
         Collection<String> childIds = viewportimpl.getChildViewPortClientIds();
         children = new ArrayList<ViewPortSnapshot>(childIds.size());
         for (String childId : childIds) {
-            children.add(new ViewPortSnapshot((ViewPortContextImpl) viewportimpl.getChildViewPortByClientId(childId)));
+            children.add(new ViewPortSnapshot(viewportimpl.getChildViewPortByClientId(childId)));
         }
     }
 
     public void dump(final PrintStream out) {
         dump(out, 0);
+    }
+
+    /**
+     * Gets the viewport-scope and all pageflow-scopes from the pageflow-stack for the rootviewport (from the unbounded
+     * task flow) as well as all nested viewports (regions).
+     * @return
+     */
+    public List<HashedScopeMap> getScopes() {
+        final List<HashedScopeMap> retval = new ArrayList<HashedScopeMap>(1 + pageFlowScopes.size());
+        getScopes(retval);
+        return retval;
+    }
+
+    private void getScopes(final List<HashedScopeMap> retval) {
+        retval.add(viewScope);
+        retval.addAll(pageFlowScopes);
+        for (ViewPortSnapshot child : children) {
+            child.getScopes(retval);
+        }
     }
 
     private void dump(final PrintStream out, final int level) {

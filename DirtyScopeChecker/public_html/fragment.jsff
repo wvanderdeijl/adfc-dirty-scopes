@@ -3,7 +3,7 @@
   <af:panelGroupLayout layout="vertical" id="pgl1" partialTriggers="b2 b3">
     <af:outputText value="first taskflow fragment" id="ot1"/>
     <af:inputText label="pageflow state" value="#{pageFlowScope.pageFlowBean.state}" readOnly="true" id="it1"/>
-    <af:inputText label="view state" value="#{pageFlowScope.viewScopeBean.state}" readOnly="true" id="it2"/>
+    <af:inputText label="view state" value="#{viewScope.viewScopeBean.state}" readOnly="true" id="it2"/>
     <af:button text="Do nothing" id="b1" action="#{viewScope.viewScopeBean.emptyAction}"/>
     <af:button text="Change state (without mark dirty)" id="b2" action="#{viewScope.viewScopeBean.changeState}"/>
     <af:button text="Change state (and mark dirty)" id="b3" action="#{viewScope.viewScopeBean.changeStateAndMark}"/>
