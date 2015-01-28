@@ -10,8 +10,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -105,13 +108,34 @@ public class ScopesSnapshot extends AbstractMap<ScopeKey, byte[]> {
 
     @Override
     public String toString() {
-        //return ToStringBuilder.reflectionToString(entries, ToStringStyle.MULTI_LINE_STYLE);
         ToStringBuilder b = new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE);
         for (Map.Entry<ScopeKey, byte[]> e : entries.entrySet()) {
             b.append(e.getKey().toString(), DatatypeConverter.printHexBinary(e.getValue()));
         }
         return b.toString();
 
+    }
+
+    public ScopeDiffs compare(final ScopesSnapshot old) {
+        // we could also try to replace all instances of ViewScope and PageFlowScope with subclasses that forward
+        // to the wrapped scopes, but also mark the usage of markDirty on that particular scope so we can report
+        // on individual scopes being changed but not marked
+        // looks like we can't really override the places where ViewScope and PageFlowScope instances are created.
+        // could have our listeners try to replace existing ones with wrapped ones.
+        // Scopes are stored in SessionBasedScopes from adfcContext.getSessionBasedScopes()
+        // adding and removing of scopes in SessionBasedScopes are package private so our class would have to be
+        // in the same oracle.adfinternal.controller.state package
+        final List<ScopeKey> changed = new ArrayList<ScopeKey>();
+        final List<ScopeKey> newKeys = new ArrayList<ScopeKey>();
+        for (Map.Entry<ScopeKey, byte[]> entry : entries.entrySet()) {
+            final ScopeKey key = entry.getKey();
+            if (!old.containsKey(key)) {
+                newKeys.add(key);
+            } else if (!Arrays.equals(entry.getValue(), old.get(key))) {
+                changed.add(key);
+            }
+        }
+        return new ScopeDiffs(changed, newKeys);
     }
 
     private static class NullOutputStream extends OutputStream {
